@@ -94,19 +94,34 @@ def shortest_path(source, target):
     global queue_frontier
     queue_frontier = QueueFrontier()
 
-    node_to_assess = Node(state=source, parent=None, action=None)
-    while node_to_assess.state != target:
-        add_neighbours_to_frontier(node_to_assess)
-        try:
-            node_to_assess = queue_frontier.remove()
-        except Exception as e:
-            return None
-    return node_to_assess.action
+    parent_node = Node(state=source, parent=None, action=None)
 
+    while parent_node.state != target:
+        for neighbour in neighbors_for_person(parent_node.state):
+            person_id = neighbour[1]
+
+            action_from_source = [neighbour] if parent_node.action is None else parent_node.action + [neighbour]
+
+            if person_id == target:
+                return action_from_source
+
+            else:
+# add to frontier and remove the next
+                if person_id != parent_node.state:
+                    node_to_add = Node(state=person_id, parent=parent_node, action=action_from_source)
+                    queue_frontier.add(node_to_add)
+            try:
+                parent_node = queue_frontier.remove()
+            except Exception as e:
+                print('exception')
+                return None
+
+    return parent_node.action
 
 
 def add_neighbours_to_frontier(parent_node):
     for neighbour in neighbors_for_person(parent_node.state):
+
         if neighbour[1] != parent_node.state:
             if parent_node.action == None:
                 action_from_source = [neighbour]
@@ -115,6 +130,7 @@ def add_neighbours_to_frontier(parent_node):
                 action_from_source = parent_action.append(neighbour)
             node_to_add = Node(state=neighbour[1], parent=parent_node, action=action_from_source)
             queue_frontier.add(node_to_add)
+
 
 def person_id_for_name(name):
     """
