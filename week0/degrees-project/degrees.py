@@ -101,6 +101,12 @@ def shortest_path(source, target):
         return [
             (people[source]["movies"], person_id_for_name)]  # no spec given for this instance, so return themselves?
 
+    for neighbour in neighbors_for_person(source):
+        if neighbour[1] != source:
+            print(neighbour)
+            node_to_add = Node(state=neighbour[0], parent=start_node, action=neighbour)
+            queue_frontier.add(node_to_add)
+
 
 def person_id_for_name(name):
     """
