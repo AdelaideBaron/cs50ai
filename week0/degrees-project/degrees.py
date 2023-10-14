@@ -91,46 +91,23 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
-    global queue_frontier
     queue_frontier = QueueFrontier()
+    source_node = Node(state=source, parent=None, action=None)
+    queue_frontier.add(source_node)
 
-    parent_node = Node(state=source, parent=None, action=None)
-
-    while parent_node.state != target:
+    while not queue_frontier.empty():
+        parent_node = queue_frontier.remove()
         for neighbour in neighbors_for_person(parent_node.state):
             person_id = neighbour[1]
+            if person_id != parent_node.state:
+                action_from_source = [neighbour] if parent_node.action is None else parent_node.action + [neighbour]
+                if person_id == target:
+                    return action_from_source
 
-            action_from_source = [neighbour] if parent_node.action is None else parent_node.action + [neighbour]
-
-            if person_id == target:
-                return action_from_source
-
-            else:
-# add to frontier and remove the next
                 if person_id != parent_node.state:
-                    node_to_add = Node(state=person_id, parent=parent_node, action=action_from_source)
-                    queue_frontier.add(node_to_add)
-            try:
-                parent_node = queue_frontier.remove()
-            except Exception as e:
-                print('exception')
-                return None
+                    queue_frontier.add(Node(state=person_id, parent=parent_node, action=action_from_source))
 
-    return parent_node.action
-
-
-def add_neighbours_to_frontier(parent_node):
-    for neighbour in neighbors_for_person(parent_node.state):
-
-        if neighbour[1] != parent_node.state:
-            if parent_node.action == None:
-                action_from_source = [neighbour]
-            else:
-                parent_action = parent_node.action
-                action_from_source = parent_action.append(neighbour)
-            node_to_add = Node(state=neighbour[1], parent=parent_node, action=action_from_source)
-            queue_frontier.add(node_to_add)
-
+    return None
 
 def person_id_for_name(name):
     """
