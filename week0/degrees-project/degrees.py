@@ -93,20 +93,26 @@ def shortest_path(source, target):
     """
     queue_frontier = QueueFrontier()
 
-    start_node = Node(state=source, parent=None, action=None)
+    node_to_assess = Node(state=source, parent=None, action=None)
+    while node_to_assess.state != target:
+        add_neighbours_to_frontier(queue_frontier, node_to_assess.state, node_to_assess)
+        try:
+            node_to_assess = queue_frontier.remove()
+        except Exception as e:
+            node_to_assess = None
 
-    # assess if node = target:
-    if start_node.state == target:
-        print("source = target")
-        return [
-            (people[source]["movies"], person_id_for_name)]  # no spec given for this instance, so return themselves?
+    print("target found")
 
-    for neighbour in neighbors_for_person(source):
-        if neighbour[1] != source:
+
+def add_neighbours_to_frontier(queue_frontier, parent_person_id, start_node):
+    for neighbour in neighbors_for_person(parent_person_id):
+        if neighbour[1] != parent_person_id:
             print(neighbour)
             node_to_add = Node(state=neighbour[0], parent=start_node, action=neighbour)
             queue_frontier.add(node_to_add)
 
+
+# add the neighbours to the queue frontier again
 
 def person_id_for_name(name):
     """
