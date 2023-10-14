@@ -91,7 +91,15 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
-    raise NotImplementedError
+    queue_frontier = QueueFrontier()
+
+    start_node = Node(state=source, parent=None, action=None)
+
+    # assess if node = target:
+    if start_node.state == target:
+        print("source = target")
+        return [
+            (people[source]["movies"], person_id_for_name)]  # no spec given for this instance, so return themselves?
 
 
 def person_id_for_name(name):
