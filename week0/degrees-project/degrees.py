@@ -91,28 +91,30 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
+    global queue_frontier
     queue_frontier = QueueFrontier()
 
     node_to_assess = Node(state=source, parent=None, action=None)
     while node_to_assess.state != target:
-        add_neighbours_to_frontier(queue_frontier, node_to_assess.state, node_to_assess)
+        add_neighbours_to_frontier(node_to_assess)
         try:
             node_to_assess = queue_frontier.remove()
         except Exception as e:
-            node_to_assess = None
+            return None
+    return node_to_assess.action
 
-    print("target found")
 
 
-def add_neighbours_to_frontier(queue_frontier, parent_person_id, start_node):
-    for neighbour in neighbors_for_person(parent_person_id):
-        if neighbour[1] != parent_person_id:
-            print(neighbour)
-            node_to_add = Node(state=neighbour[0], parent=start_node, action=neighbour)
+def add_neighbours_to_frontier(parent_node):
+    for neighbour in neighbors_for_person(parent_node.state):
+        if neighbour[1] != parent_node.state:
+            if parent_node.action == None:
+                action_from_source = [neighbour]
+            else:
+                parent_action = parent_node.action
+                action_from_source = parent_action.append(neighbour)
+            node_to_add = Node(state=neighbour[1], parent=parent_node, action=action_from_source)
             queue_frontier.add(node_to_add)
-
-
-# add the neighbours to the queue frontier again
 
 def person_id_for_name(name):
     """
