@@ -34,12 +34,25 @@ def player(board):
     raise NotImplementedError
 
 
+# Each action should be represented as a tuple (i, j) where i corresponds to the row of the move (0, 1, or 2) and j corresponds to which cell in the row corresponds to the move (also 0, 1, or 2).
+# Possible moves are any cells on the board that do not already have an X or an O in them.
+# Any return value is acceptable if a terminal board is provided as input.
 def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
+    # 1. assess whose turn
+    next_player = player(board)
+    # find all empty cells
+    available_actions = {}
+    for row in board:
+        for entry in row:
+            if entry == EMPTY:
+                i = board.index(row)
+                j = row.index(entry)
+                available_actions.add((i,j))
 
-
+    return available_actions
     raise NotImplementedError
 
 
