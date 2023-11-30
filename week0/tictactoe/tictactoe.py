@@ -22,6 +22,15 @@ def player(board):
     """
     Returns player who has the next turn on a board.
     """
+    board_sum = 0
+
+    for row in board:
+        for entry in row:
+            board_values = {X: -1, O: 1}
+            board_sum += board_values.get(entry, 0)
+
+    return X if board_sum <= 0 else O
+
     raise NotImplementedError
 
 
