@@ -70,7 +70,7 @@ class TestBoardHelpers(unittest.TestCase):
             [(0,0), (1,0), (2,0)],
             [(0,0), (1,1),(2,2)]
         ]
-        self.assertEqual(sorted(expected_possible_wins), sorted(tictactoe.get_possible_wins(possible_moves, (0,0), True)))
+        self.assertEqual(sorted(expected_possible_wins), sorted(tictactoe.get_possible_moves(possible_moves, (0, 0), True)))
 
     def test_get_possible_wins_for_unpopulated_cell(self):
         possible_moves = [
@@ -84,8 +84,14 @@ class TestBoardHelpers(unittest.TestCase):
              [(0,1), (1,1),(2,1)], [(0,2),(1,2),(2,2)], #vertical
          [(0,2), (1,1), (2,0)] #diagonal
         ]
-        print(tictactoe.get_possible_wins(possible_moves, (0,0), True) )
-        self.assertEqual(sorted(expected_possible_wins), sorted(tictactoe.get_possible_wins(possible_moves, (0,0), False)))
+        print(tictactoe.get_possible_moves(possible_moves, (0, 0), True))
+        self.assertEqual(sorted(expected_possible_wins), sorted(tictactoe.get_possible_moves(possible_moves, (0, 0), False)))
+
+    def test_winner_for_no_win(self):
+        self.assertFalse(tictactoe.winner(self.O_next))
+
+    def test_winner_for_a_win(self):
+        self.assertEqual(self.X, tictactoe.winner(self.X_win))
 
 if __name__ == '__main__':
     unittest.main()
