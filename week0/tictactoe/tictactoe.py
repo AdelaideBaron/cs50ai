@@ -38,7 +38,6 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    next_player = player(board)
     available_actions = set()
 
     for i, row in enumerate(board):
@@ -54,6 +53,10 @@ def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
+    next_player = player(board)
+    board[action[0]][action[1]] = next_player
+
+    return board
     raise NotImplementedError
 
 
