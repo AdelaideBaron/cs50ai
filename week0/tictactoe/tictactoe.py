@@ -66,6 +66,17 @@ def winner(board):
     """
     raise NotImplementedError
 
+def get_possible_wins(possible_moves, cell, is_populated):
+    moves_to_return = list()
+    if is_populated:
+        for combination in possible_moves:
+            if cell in combination:
+                moves_to_return.append(combination)
+    elif not is_populated:
+        for combination in possible_moves:
+            if cell not in combination:
+                moves_to_return.append(combination)
+    return moves_to_return
 
 def terminal(board):
     """

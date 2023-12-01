@@ -2,6 +2,7 @@ import unittest
 from tictactoe import player
 from tictactoe import actions
 from tictactoe import result
+import tictactoe
 
 class TestBoardHelpers(unittest.TestCase):
     def setUp(self):
@@ -58,6 +59,33 @@ class TestBoardHelpers(unittest.TestCase):
         actual = result(board_to_use,action_to_apply)
         self.assertEqual(expected_result, actual)
 
+    def test_get_possible_wins_for_populated_cell(self):
+        possible_moves = [
+            [(0,0), (0,1), (0,2)], [(1,0), (1,1), (1,2)], [(2,0), (2,1), (2,2)], #horizontal
+            [(0,0), (1,0), (2,0)], [(0,1), (1,1),(2,1)], [(0,2),(1,2),(2,2)], #vertical
+            [(0,0), (1,1),(2,2)], [(0,2), (1,1), (2,0)] #diagonal
+        ]
+        expected_possible_wins = [
+            [(0,0), (0,1), (0,2)],
+            [(0,0), (1,0), (2,0)],
+            [(0,0), (1,1),(2,2)]
+        ]
+        self.assertEqual(sorted(expected_possible_wins), sorted(tictactoe.get_possible_wins(possible_moves, (0,0), True)))
+
+    def test_get_possible_wins_for_unpopulated_cell(self):
+        possible_moves = [
+        [(0,0), (0,1), (0,2)], [(1,0), (1,1), (1,2)], [(2,0), (2,1), (2,2)], #horizontal
+        [(0,0), (1,0), (2,0)], [(0,1), (1,1),(2,1)], [(0,2),(1,2),(2,2)], #vertical
+        [(0,0), (1,1),(2,2)], [(0,2), (1,1), (2,0)] #diagonal
+        ]
+        expected_possible_wins = [
+
+         [(1,0), (1,1), (1,2)], [(2,0), (2,1), (2,2)], #horizontal
+             [(0,1), (1,1),(2,1)], [(0,2),(1,2),(2,2)], #vertical
+         [(0,2), (1,1), (2,0)] #diagonal
+        ]
+        print(tictactoe.get_possible_wins(possible_moves, (0,0), True) )
+        self.assertEqual(sorted(expected_possible_wins), sorted(tictactoe.get_possible_wins(possible_moves, (0,0), False)))
 
 if __name__ == '__main__':
     unittest.main()
