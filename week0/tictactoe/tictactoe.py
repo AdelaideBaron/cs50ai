@@ -93,7 +93,6 @@ def check_win_for_given_player(board, player_to_check):
         [(0,0), (1,1),(2,2)], [(0,2), (1,1), (2,0)] #diagonal
     ]
 
-    # check 1,1 first - as thats one of the most common
     if board[1][1] == player_to_check:
         possible_wins = get_possible_moves(possible_wins, (1, 1), True)
     else:
