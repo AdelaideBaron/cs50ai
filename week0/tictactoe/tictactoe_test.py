@@ -25,6 +25,10 @@ class TestBoardHelpers(unittest.TestCase):
                   [self.EMPTY, self.O, self.EMPTY],
                   [self.X, self.X, self.X]]
 
+        self.full_board_no_win = [[self.O, self.X, self.O],
+                                 [self.X, self.O, self.O],
+                                  [self.X, self.O, self.X]]
+
     def test_player(self):
         self.assertEqual(self.X,player(self.empty_board))
         self.assertEqual(self.X, player(self.X_next))
@@ -89,9 +93,21 @@ class TestBoardHelpers(unittest.TestCase):
 
     def test_winner_for_no_win(self):
         self.assertFalse(tictactoe.winner(self.O_next))
+        self.assertFalse(tictactoe.winner(self.X_next))
 
     def test_winner_for_a_win(self):
         self.assertEqual(self.X, tictactoe.winner(self.X_win))
+
+    def test_terminal_false_for_empty_board(self):
+        self.assertFalse(tictactoe.terminal(self.empty_board))
+    def test_terminal_true_for_winning_board(self):
+        self.assertTrue(tictactoe.terminal(self.X_win))
+    def test_terminal_false_for_playing_board(self):
+        self.assertFalse(tictactoe.terminal(self.X_next))
+    def test_terminal_true_for_full_board(self):
+        self.assertTrue(tictactoe.terminal(self.full_board_no_win))
+
+#         do for full board, make this in setup
 
 if __name__ == '__main__':
     unittest.main()

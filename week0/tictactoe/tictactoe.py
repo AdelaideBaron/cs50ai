@@ -122,10 +122,22 @@ def get_possible_moves(possible_moves, cell, is_populated):
                 moves_to_return.append(combination)
     return moves_to_return
 
+# The terminal function should accept a board as input, and return a boolean value indicating whether the game is over.
+# If the game is over, either because someone has won the game or because all cells have been filled without anyone winning, the function should return True.
+# Otherwise, the function should return False if the game is still in progress.
 def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
+    # check for a winner
+    if winner(board) != None:
+        return True
+    # check for NO empties
+    for row in board:
+        if EMPTY in row:
+            return False
+
+    return True
     raise NotImplementedError
 
 
