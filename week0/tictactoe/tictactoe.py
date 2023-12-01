@@ -145,9 +145,18 @@ def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
+    if winner(board) == X:
+        return 1
+    elif winner(board) == O:
+        return -1
+    else:
+        return 0
     raise NotImplementedError
 
 
+# The minimax function should take a board as input, and return the optimal move for the player to move on that board.
+# The move returned should be the optimal action (i, j) that is one of the allowable actions on the board. If multiple moves are equally optimal, any of those moves is acceptable.
+# If the board is a terminal board, the minimax function should return None.
 def minimax(board):
     """
     Returns the optimal action for the current player on the board.
