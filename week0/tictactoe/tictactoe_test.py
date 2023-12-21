@@ -25,6 +25,14 @@ class TestBoardHelpers(unittest.TestCase):
                   [self.EMPTY, self.O, self.EMPTY],
                   [self.X, self.X, self.X]]
 
+        self.X_almost_win = [[self.O, self.EMPTY, self.X],
+                      [self.EMPTY, self.O, self.EMPTY],
+                      [self.X, self.X, self.EMPTY]]
+
+        self.X_almost_win_X_GO = [[self.O, self.EMPTY, self.EMPTY],
+                             [self.EMPTY, self.O, self.EMPTY],
+                             [self.X, self.X, self.EMPTY]]
+
         self.O_win = [[self.O, self.EMPTY, self.EMPTY],
                       [self.EMPTY, self.O, self.X],
                       [self.X, self.X, self.O]]
@@ -119,6 +127,20 @@ class TestBoardHelpers(unittest.TestCase):
 
     def test_utility_no_win(self):
         self.assertEqual(tictactoe.utility(self.full_board_no_win), 0)
+
+    def test_minmax_for_action(self):
+        # not sure how to test this one
+
+        # print(tictactoe.find_minmax_for_action([2,2], self.X_almost_win, True) )
+        print(tictactoe.find_minmax_for_action([1,2], self.X_almost_win, True))
+        print(tictactoe.find_minmax_for_action([1,2], self.X_almost_win, False)) #should be 1,1
+
+    def test_minmax_on_terminal_board(self):
+        self.assertIsNone(tictactoe.minimax(self.full_board_no_win))
+
+    def test_minmax_on_board(self):
+        print(tictactoe.minimax(self.X_almost_win_X_GO))
+
 
 if __name__ == '__main__':
     unittest.main()
